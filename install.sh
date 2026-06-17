@@ -3,6 +3,7 @@
 ##############################################
 # SLOWDNS INSTALLER - Official123-12
 # Created By STANY 👑 💯
+# One-Liner: curl -s https://raw.githubusercontent.com/Official123-12/slowdns-ultra/main/install.sh | bash
 ##############################################
 
 GREEN='\033[0;32m'
@@ -10,6 +11,7 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 CYAN='\033[0;36m'
 WHITE='\033[1;37m'
+BOLD='\033[1m'
 NC='\033[0m'
 
 GITHUB_USER="Official123-12"
@@ -29,12 +31,21 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+# Check internet
+echo -e "${CYAN}🔍 Checking internet connection...${NC}"
+if ! ping -c 1 google.com > /dev/null 2>&1; then
+    echo -e "${RED}❌ No internet connection${NC}"
+    exit 1
+fi
+echo -e "${GREEN}✅ Internet OK${NC}"
+echo ""
+
 # Download script
 echo -e "${YELLOW}📥 Downloading SlowDNS Ultra Speed...${NC}"
 
 wget -q --show-progress -O /tmp/slowdns.sh "$GITHUB_URL"
 
-if [[ $? -eq 0 ]]; then
+if [[ $? -eq 0 ]] && [[ -s /tmp/slowdns.sh ]]; then
     chmod +x /tmp/slowdns.sh
     
     # Move to /usr/local/bin
@@ -43,6 +54,7 @@ if [[ $? -eq 0 ]]; then
     # Create aliases
     ln -sf /usr/local/bin/slowdns /usr/local/bin/menu 2>/dev/null
     ln -sf /usr/local/bin/slowdns /usr/local/bin/dnstt 2>/dev/null
+    ln -sf /usr/local/bin/slowdns /usr/local/bin/slowdns-manager 2>/dev/null
     
     echo ""
     echo -e "${GREEN}✅ Installation successful!${NC}"
