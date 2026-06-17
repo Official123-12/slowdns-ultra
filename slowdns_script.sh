@@ -5,13 +5,22 @@
 # Created By STANY 👑 💯
 # Version: 9.0.0 - MAXIMUM SPEED EDITION
 # Optimized for Halotel Tanzania - 10-25 Mbps
-# PURE SPEED - NO COMPROMISE
+# GitHub: https://github.com/Official123-12/slowdns-ultra
 ##############################################
 
 set -o pipefail 2>/dev/null || true
 
 # ============================================
-# COLORS - ENHANCED
+# GITHUB CONFIG
+# ============================================
+GITHUB_USER="Official123-12"
+GITHUB_REPO="slowdns-ultra"
+GITHUB_BRANCH="main"
+GITHUB_URL="https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/slowdns.sh"
+VERSION="9.0.0"
+
+# ============================================
+# COLORS
 # ============================================
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -57,7 +66,7 @@ HALOTEL_DNS=(
 )
 
 # ============================================
-# BANNER - STANY EDITION
+# BANNER - STANY EDITION WITH GITHUB
 # ============================================
 show_banner() {
     clear
@@ -87,9 +96,60 @@ show_banner() {
 ║              ║   📱 OPTIMIZED FOR TANZANIA NETWORKS 📱    ║                ║
 ║              ╚══════════════════════════════════════════════╝                ║
 ║                                                                              ║
+║              ╔══════════════════════════════════════════════╗                ║
+║              ║   📦 v${VERSION} - Official123-12/slowdns-ultra   ║                ║
+║              ╚══════════════════════════════════════════════╝                ║
+║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 EOF
     echo -e "${NC}"
+}
+
+# ============================================
+# CHECK FOR UPDATES FROM GITHUB
+# ============================================
+check_update() {
+    print_header "🔍 CHECKING FOR UPDATES"
+    echo ""
+    
+    echo -e "${CYAN}  Checking GitHub: ${WHITE}${GITHUB_USER}/${GITHUB_REPO}${NC}"
+    
+    # Get latest version from GitHub
+    LATEST_VERSION=$(curl -s "https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases/latest" | grep tag_name | cut -d'"' -f4 2>/dev/null)
+    
+    if [[ -z "$LATEST_VERSION" ]]; then
+        # If no release, check main branch version
+        LATEST_VERSION=$(curl -s "${GITHUB_URL}" | grep "^# Version:" | head -1 | awk '{print $3}' 2>/dev/null)
+    fi
+    
+    if [[ -n "$LATEST_VERSION" ]] && [[ "$LATEST_VERSION" != "$VERSION" ]]; then
+        echo ""
+        echo -e "  ${YELLOW}⚠️  New version available!${NC}"
+        echo -e "  ${WHITE}Current: ${DIM}$VERSION${NC}"
+        echo -e "  ${WHITE}Latest:  ${GREEN}$LATEST_VERSION${NC}"
+        echo ""
+        read -p "  Update now? (y/n): " update_choice
+        
+        if [[ "$update_choice" == "y" ]]; then
+            echo -e "${CYAN}  Downloading update...${NC}"
+            wget -q --show-progress -O /tmp/slowdns_update.sh "$GITHUB_URL"
+            if [[ $? -eq 0 ]]; then
+                chmod +x /tmp/slowdns_update.sh
+                echo -e "${GREEN}✅ Update downloaded${NC}"
+                echo -e "${YELLOW}  Restarting with new version...${NC}"
+                sleep 2
+                exec /tmp/slowdns_update.sh
+            else
+                print_error "Failed to download update"
+            fi
+        else
+            print_warning "Update cancelled"
+        fi
+    else
+        echo -e "${GREEN}✅ You have the latest version (${VERSION})${NC}"
+    fi
+    
+    sleep 1
 }
 
 # ============================================
@@ -241,6 +301,7 @@ EOF
 # SLOWDNS ULTRA SPEED - HALOTEL OPTIMIZED
 # Created By STANY 👑 💯
 # Target: 10-25 Mbps
+# GitHub: Official123-12/slowdns-ultra
 
 net.ipv4.ip_forward = 1
 net.ipv4.tcp_congestion_control = bbr
@@ -858,15 +919,17 @@ main_menu() {
         echo -e "  ${BLUE}7)${NC} 👤 SSH Users"
         echo -e "  ${BLUE}8)${NC} 📋 View Logs"
         echo -e "  ${PURPLE}9)${NC} ⚡ Speed Optimize"
+        echo -e "  ${PURPLE}U)${NC} 🔄 Check Update"
         echo -e "  ${RED}10)${NC} 🗑️  Uninstall"
         echo -e "  ${WHITE}0)${NC} 🚪 Exit"
         echo ""
         echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo -e "${WHITE}Version: 9.0 ULTRA | ${GREEN}Created By STANY 👑 💯${NC}"
+        echo -e "${WHITE}Version: ${VERSION} | ${GREEN}Created By STANY 👑 💯${NC}"
         echo -e "${YELLOW}🎯 Target Speed: 10-25 Mbps on Halotel${NC}"
+        echo -e "${CYAN}📦 GitHub: ${WHITE}Official123-12/slowdns-ultra${NC}"
         echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
         echo ""
-        read -p "  Choice [0-10]: " choice
+        read -p "  Choice [0-10, U]: " choice
         
         case $choice in
             1)
@@ -933,6 +996,10 @@ main_menu() {
             9)
                 show_banner
                 optimize_halotel_speed
+                press_enter
+                ;;
+            U|u)
+                check_update
                 press_enter
                 ;;
             10)
