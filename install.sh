@@ -18,8 +18,8 @@ WHITE='\033[1;37m'
 NC='\033[0m'
 
 # GitHub repository details
-GITHUB_USER="Samwelmushi"
-GITHUB_REPO="slowdns-manager"
+GITHUB_USER="Official123-12"
+GITHUB_REPO="slowdns-ultra"
 GITHUB_BRANCH="main"
 SCRIPT_NAME="slowdns_script.sh"
 GITHUB_URL="https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${SCRIPT_NAME}"
@@ -47,7 +47,7 @@ show_banner() {
 ║                                                               ║
 ║                    MANAGER INSTALLER                         ║
 ║                                                               ║
-║              CREATED BY THE KING 👑 💯                       ║
+║              CREATED BY STANYTZ                     ║
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝
 EOF
