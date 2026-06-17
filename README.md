@@ -57,14 +57,14 @@ The most advanced DNS tunneling solution with dual-mode support (SSH + V2Ray) an
 ### One-Line Install (Recommended)
 
 ```bash
-wget https://raw.githubusercontent.com/Samwelmushi/slowdns-manager/main/slowdns_script.sh && chmod +x slowdns_script.sh && sudo ./slowdns_script.sh
+wget https://raw.githubusercontent.com/Official123-12/slowdns-manager/main/slowdns_script.sh && chmod +x slowdns_script.sh && sudo ./slowdns_script.sh
 ```
 
 ### Step-by-Step Install
 
 ```bash
 # Download the script
-wget https://raw.githubusercontent.com/Samwelmushi/slowdns-manager/main/slowdns_script.sh
+wget https://raw.githubusercontent.com/Official123-12/slowdns-manager/main/slowdns_script.sh
 
 # Make it executable
 chmod +x slowdns_script.sh
@@ -77,7 +77,7 @@ sudo ./slowdns_script.sh
 
 ```bash
 # Clone repository
-git clone https://github.com/Samwelmushi/slowdns-manager.git
+git clone https://github.com/Official123-12/slowdns-manager.git
 
 # Navigate to directory
 cd slowdns-manager
